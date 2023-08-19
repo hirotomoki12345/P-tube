@@ -41,6 +41,11 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             display: none;
+            z-index: 2;
+        }
+
+        #loadMoreButton {
+            margin-top: 20px;
         }
 
         canvas {
@@ -59,6 +64,7 @@
     <div id="videoContainer">
         <div id="videoList"></div>
         <div id="overlay" onclick="closeVideo()"></div>
+        <button id="loadMoreButton" onclick="loadMoreVideos()">さらに表示</button>
         <div id="player"></div>
     </div>
 
@@ -66,16 +72,23 @@
     <script>
         var apiKey = "AIzaSyD9_QlFf6fwKiznHnMY1tQDVdgmObgN-9I"; // ここにAPIキーを入力
         var currentVideoId = "";
+        var nextPageToken = "";
+        var displayedResults = 0;
 
         function searchVideos() {
+            nextPageToken = "";
+            displayedResults = 0;
+            loadMoreVideos();
+        }
+
+        function loadMoreVideos() {
             var searchQuery = document.getElementById("searchInput").value;
-            var url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchQuery}&part=snippet&type=video`;
+            var url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchQuery}&part=snippet&type=video&maxResults=10&pageToken=${nextPageToken}`;
 
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     var videoList = document.getElementById("videoList");
-                    videoList.innerHTML = "";
 
                     data.items.forEach(item => {
                         var videoItem = document.createElement("div");
@@ -84,7 +97,15 @@
                                               <p>${item.snippet.title}</p>`;
                         videoItem.addEventListener("click", () => openVideo(item.id.videoId));
                         videoList.appendChild(videoItem);
+                        displayedResults++;
                     });
+
+                    if (data.nextPageToken) {
+                        nextPageToken = data.nextPageToken;
+                        document.getElementById("loadMoreButton").style.display = "block";
+                    } else {
+                        document.getElementById("loadMoreButton").style.display = "none";
+                    }
                 });
         }
 
