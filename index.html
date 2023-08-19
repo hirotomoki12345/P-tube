@@ -53,7 +53,7 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        var apiKey = "AIzaSyD9_QlFf6fwKiznHnMY1tQDVdgmObgN-9I"; // ここにAPIキーを入力
+        var apiKey = "AIzaSyD9_QlFf6fwKiznHnMY1tQDVdgmObgN-9I";
 
         function searchVideos() {
             var searchQuery = document.getElementById("searchInput").value;
@@ -77,18 +77,8 @@
         }
 
         function loadVideo(videoId) {
-            var player = new YT.Player("player", {
-                height: "360",
-                width: "640",
-                videoId: videoId,
-                events: {
-                    'onReady': onPlayerReady,
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            event.target.playVideo();
+            var playerDiv = document.getElementById("player");
+            playerDiv.innerHTML = '<iframe width="640" height="360" src="https://www.youtube.com/embed/' + videoId + '?autoplay=1" frameborder="0" allowfullscreen></iframe>';
         }
     </script>
 </body>
