@@ -21,11 +21,12 @@
             justify-content: center;
         }
 
-        #videoItem {
+        .videoItem {
             border: 1px solid #ccc;
             margin: 10px;
             padding: 10px;
             cursor: pointer;
+            max-width: 200px;
         }
 
         #player {
@@ -52,7 +53,7 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        var apiKey = "AIzaSyD9_QlFf6fwKiznHnMY1tQDVdgmObgN-9I";
+        var apiKey = "AIzaSyD9_QlFf6fwKiznHnMY1tQDVdgmObgN-9I"; // ここにAPIキーを入力
 
         function searchVideos() {
             var searchQuery = document.getElementById("searchInput").value;
@@ -66,6 +67,7 @@
 
                     data.items.forEach(item => {
                         var videoItem = document.createElement("div");
+                        videoItem.classList.add("videoItem");
                         videoItem.innerHTML = `<img src="${item.snippet.thumbnails.default.url}">
                                               <p>${item.snippet.title}</p>`;
                         videoItem.addEventListener("click", () => playVideo(item.id.videoId));
