@@ -29,16 +29,6 @@
             max-width: 200px;
         }
 
-        #player {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
         #overlay {
             position: fixed;
             top: 0;
@@ -69,7 +59,6 @@
     <button onclick="searchVideos()">検索</button>
     <div id="videoContainer">
         <div id="overlay" onclick="closeVideo()"></div>
-        <div id="player"></div> <!-- 動画を一番上に移動 -->
         <div id="videoList"></div>
         <button id="loadMoreButton" onclick="loadMoreVideos()">さらに表示</button>
     </div>
@@ -117,26 +106,20 @@
 
         function openVideo(videoId) {
             currentVideoId = videoId;
-            var playerDiv = document.getElementById("player");
             var overlay = document.getElementById("overlay");
 
-            playerDiv.innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + videoId + '?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-            playerDiv.style.display = "block";
             overlay.style.display = "block";
         }
 
         function closeVideo() {
             currentVideoId = "";
-            var playerDiv = document.getElementById("player");
             var overlay = document.getElementById("overlay");
 
-            playerDiv.innerHTML = "";
-            playerDiv.style.display = "none";
             overlay.style.display = "none";
         }
 
         document.addEventListener("click", function(event) {
-            if (currentVideoId && !event.target.closest("#player")) {
+            if (currentVideoId && !event.target.closest("#overlay")) {
                 closeVideo();
             }
         });
