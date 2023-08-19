@@ -50,15 +50,15 @@
     <h1>YouTube動画検索</h1>
     <input type="text" id="searchInput" placeholder="検索キーワード">
     <button onclick="searchVideos()">検索</button>
+    <div id="player"></div> <!-- 動画をここに移動 -->
     <div id="videoContainer">
         <div id="videoList"></div>
         <button id="loadMoreButton" onclick="loadMoreVideos()">さらに表示</button>
-        <div id="player"></div>
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        var apiKey = "AIzaSyD9_QlFf6fwKiznHnMY1tQDVdgmObgN-9I";
+        var apiKey = "AIzaSyD9_QlFf6fwKiznHnMY1tQDVdgmObgN-9I"; // ここにAPIキーを入力
         var nextPageToken = "";
         var displayedResults = 0;
 
